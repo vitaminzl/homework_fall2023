@@ -104,9 +104,9 @@ class LoadedGaussianPolicy(BasePolicy, nn.Module):
         if len(obs.shape) > 1:
             observation = obs
         else:
-            observation = obs[None, :]
+            observation = obs[None, :]  # Add batch dimension, get a shape of (1, obs_dim)
         observation = ptu.from_numpy(observation.astype(np.float32))
-        action = self(observation)
+        action = self(observation)  # shape: (batch_size, action_dim)
         return ptu.to_numpy(action)
 
     def save(self, filepath):

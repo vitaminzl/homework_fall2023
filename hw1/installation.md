@@ -23,7 +23,9 @@ A. (Recommended) Install with conda:
 
 	4. Install the requirements into this conda environment
 	```
-	pip install -r requirements.txt
+	pip install -r requirements.txt  
+	# 执行报错 Failed building wheel for box2d-py
+	# 解决方法 conda install swig
 	```
 
 	5. Allow your code to be able to see 'cs285'
