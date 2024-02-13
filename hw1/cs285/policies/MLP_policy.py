@@ -132,7 +132,7 @@ class MLPPolicySL(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
         mean = self.mean_net(observation)
         std = torch.exp(self.logstd)
         dist = distributions.Normal(mean, std)
-        return dist.rsample()
+        return dist.rsample() # self.mean_net(observation) 
 
     def update(self, observations, actions):
         """
