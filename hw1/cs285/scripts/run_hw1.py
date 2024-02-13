@@ -40,7 +40,10 @@ def run_training_loop(params):
     #############
     ## INIT
     #############
-
+    
+    # Add a environ variable for render.
+    os.environ['MUJOCO_GL'] = 'osmesa' 
+    
     # Get params, create logger, create TF session
     logger = Logger(params['logdir'])
 
@@ -159,10 +162,9 @@ def run_training_loop(params):
             # HINT3: return corresponding data points from each array (i.e., not different indices from each array)
             # for imitation learning, we only need observations and actions.  
             train_batch_size = params['train_batch_size']
-            perm = np.random.permutation(replay_buffer.obs.shape[0])
-            ob_batch = replay_buffer.obs[perm][:train_batch_size]
-            ac_batch = replay_buffer.acs[perm][:train_batch_size]
-            ob_batch, ac_batch = ptu.from_numpy(ob_batch), ptu.from_numpy(ac_batch)
+            indices = np.random.permutation(len(replay_buffer))[:train_batch_size]
+            ob_batch = replay_buffer.obs[indices]
+            ac_batch = replay_buffer.acs[indices]
 
             # use the sampled data to train an agent
             train_log = actor.update(ob_batch, ac_batch)
